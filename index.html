@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Agent conversationnel – Démo</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ÉCRAN 1 : connexion (fournisseur + clé API) -->
+  <main id="setup" class="screen">
+    <div class="card">
+      <h1>Agent conversationnel</h1>
+      <p class="muted">Choisissez votre fournisseur d'IA et collez votre clé API pour discuter avec le modèle.</p>
+
+      <label for="provider">Fournisseur LLM</label>
+      <select id="provider"></select>
+
+      <div id="customBox" hidden>
+        <label for="baseUrl">URL de base (compatible OpenAI)</label>
+        <input id="baseUrl" type="url" placeholder="https://mon-fournisseur.com/v1" autocomplete="off">
+      </div>
+
+      <label for="apiKey">Clé API</label>
+      <input id="apiKey" type="password" placeholder="gsk_..." autocomplete="off" spellcheck="false">
+      <p class="hint"><a id="keyLink" href="#" target="_blank" rel="noopener">Obtenir une clé</a></p>
+
+      <label class="check">
+        <input id="remember" type="checkbox">
+        Se souvenir de la clé sur cet appareil
+      </label>
+
+      <button id="connectBtn" class="primary">Se connecter</button>
+      <p id="setupError" class="error" role="alert" hidden></p>
+
+      <p class="notice">
+        🔒 Votre clé reste dans votre navigateur : elle n'est envoyée qu'à votre fournisseur,
+        jamais à un serveur de cette application. Utilisez une clé que vous pouvez révoquer,
+        et évitez les ordinateurs partagés.
+      </p>
+    </div>
+  </main>
+
+  <!-- ÉCRAN 2 : discussion -->
+  <div id="chat" class="screen" hidden>
+    <header class="bar">
+      <div class="bar-left">
+        <strong id="providerLabel">Groq</strong>
+        <select id="modelSelect" aria-label="Modèle"></select>
+      </div>
+      <div class="bar-right">
+        <button id="settingsBtn" class="ghost" title="Instructions système">⚙️ Instructions</button>
+        <button id="clearBtn" class="ghost" title="Nouvelle conversation">🗑️ Nouveau</button>
+        <button id="logoutBtn" class="ghost" title="Se déconnecter">Déconnexion</button>
+      </div>
+    </header>
+
+    <section id="settingsPanel" class="panel" hidden>
+      <label for="systemPrompt">Instructions système (le « rôle » de l'agent)</label>
+      <textarea id="systemPrompt" rows="3"></textarea>
+    </section>
+
+    <section id="messages" class="messages" aria-live="polite"></section>
+
+    <form id="composer" class="composer">
+      <textarea id="input" rows="1" placeholder="Écrivez votre message… (Entrée pour envoyer, Maj+Entrée pour un saut de ligne)"></textarea>
+      <button id="sendBtn" type="submit" class="primary">Envoyer</button>
+    </form>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
